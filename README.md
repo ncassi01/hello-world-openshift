@@ -3,6 +3,9 @@
   - Documentation can be found here:
   https://openliberty.io/guides/rest-intro.html
 
+  - Download original code here:
+  https://github.com/openliberty/guide-rest-intro.git
+
   - The RESTful service responds to GET requests made to the http://localhost:9080/LibertyProject/system/properties URL.
 
   - The service responds to a GET request with a JSON representation of the system properties, where each property is a field in a JSON object, like this:

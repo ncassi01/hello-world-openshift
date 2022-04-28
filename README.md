@@ -48,9 +48,7 @@ $ helm create build
 ```
 
 ## TODO's
-- Repo creation
 
-- Helm build project
 ### Build and Deploy to Openshift
 
 ```sh

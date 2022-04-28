@@ -1,4 +1,4 @@
-# OpenLiberty Web Service Application - Containerization Ref App
+# Containerization Reference App for OpenLiberty Web Service Application 
 
   The original application is from a guide on how to create a RESTful service with Jakarta Restful Web Services, JSON-B, and Open Liberty.
 

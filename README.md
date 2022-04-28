@@ -40,3 +40,56 @@ or
 $ mvn liberty:stop
 ```
 
+# Containerization Process
+## Create Helm chart for building the project
+Helm documentation: https://docs.bitnami.com/tutorials/create-your-first-helm-chart/
+```sh
+$ helm create build
+```
+
+## TODO's
+- Repo creation
+
+- Helm build project
+### Build and Deploy to Openshift
+# generate your bitbucket token from https://bitbucket.bsc.bscal.com/plugins/servlet/access-tokens/add
+export BITBUCKET_TOKEN=<your bitbucket token>
+export BITBUCKET_USER=<your bitbucket username>
+export NAMESPACE=<namespace>
+
+helm upgrade -i helloworldopenshift-build helm/build -n ${NAMESPACE} \
+  --set secrets.bitbucket.username=${BITBUCKET_USER} \
+  --set secrets.bitbucket.password=${BITBUCKET_TOKEN} \
+  --set git.ref=$(git rev-parse --abbrev-ref HEAD) \
+  --set git.uri=$(git config --get remote.origin.url)
+
+- The Dockerfiles
+
+- Helm deploy project
+
+- The server.xml + datasources.xml patterns.
+
+- THE MOST DIFFICULT PART is simulating a database connection (toy DB)
+
+- Possible just to read from a real db? ... Or we deploy something? ... But then drivers will be different if we dont connect with denodo, facits, or elastic search...
+
+- But we can just put dead database connection patterns in the repo?
+
+- This is still a well understood pattern even if hard to demo
+
+- The build/ deploy helm charts
+
+- An example of sealing of some secrets (already very well documented)
+
+- Horizontal Pod AutoScaling patterns
+
+- NAS connections
+
+- Monitoring use tie in (This is still kinda fuzzy because monitoring team still hasnt showed any actual integration)
+
+- Argo Charts that can be used in a personal namespace
+
+- Documentation that points to the "Formal Environment" CI/CD processes
+
+- Instructions on how to involve SCRM team to get Jenkins Jobs and have pipelines used
+

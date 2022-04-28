@@ -1,0 +1,44 @@
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: {{ .Values.app }}
+  labels:
+    {{- include "build.labels" . | nindent 4 }}
+spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: {{ .Values.app }}:latest
+  resources: 
+    requests:
+      cpu: 300m
+      memory: 1Gi
+    limits:
+      cpu: 300m
+      memory: 1Gi
+  successfulBuildsHistoryLimit: 5
+  failedBuildsHistoryLimit: 5
+  strategy:
+    dockerStrategy:
+      # pull secret is added at cluster level. do not need, but keeping just in case
+      {{- if .Values.secrets.artifactory.enabled }}
+      pullSecret:
+        name: {{ .Values.app }}-artifactory-pullsecret
+      {{- end }}
+      dockerfilePath: {{ .Values.dockerfilePath }}
+  postCommit: {}
+  source:
+    type: Git
+    git:
+      uri: {{ .Values.git.uri }}
+      ref: {{ .Values.git.ref }}
+    sourceSecret:
+      name: {{ .Values.app }}-bitbucket
+    secrets:
+      - secret:
+          name: {{ .Values.app }}-settings-mvn
+        destinationDir: ".m2"
+  runPolicy: Serial
+  triggers:
+  - type: ConfigChange

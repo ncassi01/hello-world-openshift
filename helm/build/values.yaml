@@ -1,0 +1,16 @@
+app: helloworldopenshift
+
+secrets:
+  bitbucket:
+    username:
+    password: # generate your bitbucket token from https://bitbucket.bsc.bscal.com/plugins/servlet/access-tokens/add
+  artifactory:
+    enabled: false # artifactory pull secret does not seem to be require since there is already a cluster-wide pull secret in openshift-config
+    username:
+    password: # if needed, generate your API Key from https://artifactory.bsc.bscal.com/artifactory/webapp/#/profile
+
+git:
+  uri: https://bitbucket.blueshieldca.com/scm/~agimei01/helloworldopenshift.git
+  ref: master
+
+dockerfilePath: Dockerfile.builder

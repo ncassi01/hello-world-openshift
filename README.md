@@ -7,7 +7,7 @@
 
   ## Application Description
 
-  - The RESTful service has 2 endpoints to GET requests made to the http://localhost:9080/LibertyProject/ as below;
+  - The RESTful service has 2 GET endpoints that respond at the following context root URL: http://localhost:9080/LibertyProject/ 
 
   1. ```/system/properties``` - returns a JSON  of the system properties like this:
 

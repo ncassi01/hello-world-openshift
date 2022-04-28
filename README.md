@@ -7,16 +7,20 @@
 
   ## Application Description
 
-  - The RESTful service responds to GET requests made to the http://localhost:9080/LibertyProject/system/properties URL.
+  - The RESTful service has 2 endpoints to GET requests made to the http://localhost:9080/LibertyProject/ as below;
 
-  - The service responds to a GET request with a JSON representation of the system properties, where each property is a field in a JSON object, like this:
+  1. ```/system/properties``` - returns a JSON  of the system properties like this:
 
-```sh
-{
-  "os.name":"Mac",
-  "java.version": "1.8"
-}
-```
+  ```sh
+  {
+    "os.name":"Mac",
+    "java.version": "1.8"
+  }
+  ```
+  2. ```/system/hello``` - returns string
+  ```sh
+  Hello World
+  ```
 
 ### Running locally
 To run type:

@@ -1,10 +1,11 @@
-# Simple OpenLiberty RESTful web service for Openshift containerization
+# Containerizing OpenLiberty RESTful web service
+
+  The original application is from a guide on how to create a RESTful service with Jakarta Restful Web Services, JSON-B, and Open Liberty.
 
   - Documentation can be found here:
   https://openliberty.io/guides/rest-intro.html
 
-  - Download original code here:
-  https://github.com/openliberty/guide-rest-intro.git
+  ## Application Description
 
   - The RESTful service responds to GET requests made to the http://localhost:9080/LibertyProject/system/properties URL.
 

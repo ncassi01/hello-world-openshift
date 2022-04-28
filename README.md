@@ -52,6 +52,8 @@ $ helm create build
 
 - Helm build project
 ### Build and Deploy to Openshift
+
+```sh
 # generate your bitbucket token from https://bitbucket.bsc.bscal.com/plugins/servlet/access-tokens/add
 export BITBUCKET_TOKEN=<your bitbucket token>
 export BITBUCKET_USER=<your bitbucket username>
@@ -62,6 +64,7 @@ helm upgrade -i helloworldopenshift-build helm/build -n ${NAMESPACE} \
   --set secrets.bitbucket.password=${BITBUCKET_TOKEN} \
   --set git.ref=$(git rev-parse --abbrev-ref HEAD) \
   --set git.uri=$(git config --get remote.origin.url)
+```
 
 - The Dockerfiles
 

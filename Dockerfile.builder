@@ -8,7 +8,7 @@ COPY src/ src/
 COPY pom.xml pom.xml
 COPY .m2 .m2
 
-RUN mvn .m2/settings.xml \
+RUN mvn -s .m2/settings.xml \
         -Dsettings.security=.m2/settings-security.xml \
         -Dmaven.wagon.http.ssl.insecure=true \
         -Dmaven.wagon.http.ssl.allowall=true \

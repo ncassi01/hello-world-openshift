@@ -69,8 +69,7 @@ Update Chart, templates and values yamls (see example in this repo).
 <details>
 <summary><b>Create Maven settings sealed secret</b></summary>
 
-Create an **ARTIFACTORY_TOKEN**;
--  Login to [Artifactory](https://artifactory.bsc.bscal.com/artifactory/webapp/#/profile) &rarr; Click on userID on right hand corner &rarr; Create TOKEN
+**ARTIFACTORY_TOKEN** is required. To create one, login to [Artifactory](https://artifactory.bsc.bscal.com/artifactory/webapp/#/profile) &rarr; Click on userID on right hand corner &rarr; Create TOKEN &rarr; Copy and save token
 
 ```sh
 export NAMESPACE=<namespace>

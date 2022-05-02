@@ -61,14 +61,14 @@ $ helm create build
 ```
 Update Chart, templates and values yamls (see example in this repo).
 
-## Setup maven to use credentials in Openshift S2I Builds (Dockerfile.builder)
+## Setup maven to use credentials in Openshift source-to-image (S2I) Builds (Dockerfile.builder)
 
 What is source-to-image (S2I)? 
  - [source-to-image github](https://github.com/openshift/source-to-image)
  - [Redhat OCP documentation](https://docs.openshift.com/container-platform/4.10/openshift_images/using_images/using-s21-images.html)
  - [An example](https://tomd.xyz/openshift-s2i-example/)
 
-> Access to artifactory maven repo requires authentication when accessed in openshift. The below technique offers the ability to seal your credentials and use them to run maven commands in Openshift.
+Running Maven commands in Openshift requires authentication to the artifactory maven repo. This is achieved by creating and using your credentials as sealed secrets.
 <br>
 
 <details>

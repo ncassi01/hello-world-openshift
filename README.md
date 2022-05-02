@@ -11,18 +11,19 @@
 
   - The RESTful service has 2 GET endpoints that respond at the following context root URL: http://localhost:9080/LibertyProject/ 
 
-  1. ```/system/properties``` - returns a JSON  of the system properties like this:
-
+  1. ```/system/hello``` - returns string
+  ```sh
+  Hello World
+  ``` 
+  
+  2. ```/system/properties``` - returns a JSON  of the system properties like this:
   ```sh
   {
     "os.name":"Mac",
     "java.version": "1.8"
   }
   ```
-  2. ```/system/hello``` - returns string
-  ```sh
-  Hello World
-  ```
+  
 
 ### Running locally
 To run type:

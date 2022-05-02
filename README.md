@@ -61,7 +61,7 @@ $ helm create build
 ```
 Update Chart, templates and values yamls (see example in this repo).
 
-## Setup maven to use credentials in Openshift source-to-image (S2I) Builds (Dockerfile.builder)
+## Setup Maven credentials for Openshift source-to-image (S2I) Builds
 
 What is source-to-image (S2I)? 
  - [source-to-image github](https://github.com/openshift/source-to-image)
@@ -99,7 +99,7 @@ kubeseal -o yaml --controller-namespace sealed-secrets </tmp/secret-settings-mvn
 - To create and validate a ```Dockerfile``` you will need to install either Podman or Docker on your computer, however this is not possible on VDI because neither Docker nor Podman support nested virtualization. Below are a of couple ways to accomplish this task;
 
 <details>
-<summary><b>1. Using the S2I (Source to Image) build process using a multi stage Dockerfile.builder</b></summary>
+<summary><b>1. Using the S2I build process with a multi stage Dockerfile.builder</b></summary>
 
 Generate your **BITBUCKET_TOKEN** from https://bitbucket.bsc.bscal.com/plugins/servlet/access-tokens/add
 

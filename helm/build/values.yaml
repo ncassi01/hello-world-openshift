@@ -14,3 +14,5 @@ git:
   ref: master
 
 dockerfilePath: Dockerfile.builder
+
+sealedSecret.settingsMvn:

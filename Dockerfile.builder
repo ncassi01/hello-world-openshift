@@ -6,10 +6,14 @@ WORKDIR /tmp/app
 
 COPY src/ src/
 COPY pom.xml pom.xml
-COPY helloworldopenshift.properties helloworldopenshift.properties
-COPY server.xml server.xml
+COPY .m2 .m2
 
-RUN mvn -q clean package
+RUN mvn -q -s .m2/settings.xml \
+        -Dsettings.security=.m2/settings-security.xml \
+        -Dmaven.wagon.http.ssl.insecure=true \
+        -Dmaven.wagon.http.ssl.allowall=true \
+        -Dmaven.wagon.http.ssl.ignore.validity.dates=true \
+        clean package
 
 FROM bsc-docker-all.artifactory.bsc.bscal.com/ice/open-liberty:21.0.0.3
 

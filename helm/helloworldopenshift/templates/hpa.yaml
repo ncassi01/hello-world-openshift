@@ -1,0 +1,23 @@
+{{- if .Values.autoscaling.enabled }}
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ include "helloworldopenshift.fullname" . }}
+  labels:
+    {{- include "helloworldopenshift.labels" . | nindent 4 }}
+  annotations:
+    {{- if .Values.autoscaling.targetMemoryUtilizationPercentage }}
+    autoscaling.alpha.kubernetes.io/metrics: >-
+      {{ printf "[{\"type\":\"Resource\",\"resource\":{\"name\":\"memory\",\"targetAverageUtilization\":%v}}]" .Values.autoscaling.targetMemoryUtilizationPercentage }}
+    {{- end }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ include "helloworldopenshift.fullname" . }}
+  minReplicas: {{ .Values.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.autoscaling.maxReplicas }}
+  {{- if .Values.autoscaling.targetCPUUtilizationPercentage }}
+  targetCPUUtilizationPercentage: {{ .Values.autoscaling.targetCPUUtilizationPercentage }}
+  {{- end }}
+{{- end }}

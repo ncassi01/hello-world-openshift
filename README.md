@@ -96,7 +96,7 @@ kubeseal -o yaml --controller-namespace sealed-secrets </tmp/secret-settings-mvn
 ```
 </details>
 
-## Build and Deploy container Image to Openshift
+## Build Application container Image
 - To create and validate a ```Dockerfile``` you will need to install either Podman or Docker on your computer, however this is not possible on VDI because neither Docker nor Podman support nested virtualization. Below are a of couple ways to accomplish this task;
 
 <details>
@@ -153,6 +153,15 @@ exit
 </details>
 
 
+## Deploy Application in Openshift
+
+Create the application helm Chart and deploy and application to Openshift
+
+```sh
+helm upgrade -i helloworldopenshift helm/helloworldopenshift -n ${NAMESPACE} \
+  --set image.repository=image-registry.openshift-image-registry.svc:5000/${NAMESPACE}/helloworldopenshift \
+  --set image.tag=latest 
+```
 
 ## TODO's
 

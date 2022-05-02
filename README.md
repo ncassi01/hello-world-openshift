@@ -36,6 +36,8 @@ Application is running when you see
 
 Test the application, submit GET request to this endpoint: 
 >http://localhost:9080/LibertyProject/system/hello 
+
+
 >http://localhost:9080/LibertyProject/system/properties 
 
 Home page:

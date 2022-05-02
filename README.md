@@ -115,7 +115,7 @@ helm upgrade -i helloworldopenshift-build helm/build -n ${NAMESPACE} \
 <br>
 
 <details>
-<summary>**2. Using a Privileged pod in OCP**</summary>
+<summary><b>2. Using a Privileged pod in OCP</b></summary>
 
 > You must run the below steps as a cluster-admin in ocp for this to work
  

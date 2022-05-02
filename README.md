@@ -112,6 +112,7 @@ helm upgrade -i helloworldopenshift-build helm/build -n ${NAMESPACE} \
 ```
 </details>
 
+
 <details>
 <summary>2. Using a Privileged pod in OCP</summary>
 

@@ -64,6 +64,7 @@ Update Chart, templates and values yamls (see example in this repo).
 ## Setup maven to use credentials in Openshift S2I Builds (Dockerfile.builder)
 
 > Access to artifactory maven repo requires authentication when accessed in openshift. The below technique offers the ability to seal your credentials and use them to run maven commands in Openshift.
+<br>
 
 <details>
 <summary><b>Create Maven settings sealed secret</b></summary>
@@ -83,9 +84,9 @@ envsubst <settings.xml > ${HOME}/.m2/settings.xml
 
 # Run below commands to create the sealed secret for maven settings (one time)
 
-oc create secret generic fadintegrationservicev2-settings-mvn --dry-run=client --from-file=settings.xml=$HOME/.m2/settings.xml --from-file=settings-security.xml=$HOME/.m2/settings-security.xml -n ${NAMESPACE} -o yaml > /tmp/secret-settings-mvn.yaml
+oc create secret generic helloworldopenshift-settings-mvn --dry-run=client --from-file=settings.xml=$HOME/.m2/settings.xml --from-file=settings-security.xml=$HOME/.m2/settings-security.xml -n ${NAMESPACE} -o yaml > /tmp/secret-settings-mvn.yaml
 
-kubeseal -o yaml --controller-namespace sealed-secrets </tmp/secret-settings-mvn.yaml >sealedsecrets/${PROP_ENV}/sealedsecret-${PROP_ENV}-settings-mvn.yaml
+kubeseal -o yaml --controller-namespace sealed-secrets </tmp/secret-settings-mvn.yaml >sealedsecrets/sealedsecret-settings-mvn.yaml -n $NAMESPACE
 
 ```
 </details>
@@ -108,7 +109,8 @@ helm upgrade -i helloworldopenshift-build helm/build -n ${NAMESPACE} \
   --set secrets.bitbucket.username=${BITBUCKET_USER} \
   --set secrets.bitbucket.password=${BITBUCKET_TOKEN} \
   --set git.ref=$(git rev-parse --abbrev-ref HEAD) \
-  --set git.uri=$(git config --get remote.origin.url)
+  --set git.uri=$(git config --get remote.origin.url) \
+  --set-file sealedSecret.settingsMvn=sealedsecrets/sealedsecret-settings-mvn.yaml
 ```
 </details>
 
@@ -134,11 +136,11 @@ git config --global http.sslVerify false
 git clone https://bitbucket.blueshieldca.com/scm/~agimei01/helloworldopenshift.git
 cd helloworldopenshift
 podman login bsc-docker-all.artifactory.bsc.bscal.com --tls-verify=false
-podman build -t image-registry.openshift-image-registry.svc:5000/$NAMESPACE/helloworldopenshift:latest -f Dockerfile.builder --tls-verify=false
+podman build -t image-registry.openshift-image-registry.svc:5000/$NAMESPACE/helloworldopenshift:latest -f Dockerfile.builder.podman --tls-verify=false
 
 # push to internal openshift registry...
-oc login -u <Openshift ID> https://api.npek8s.bsc.bscal.com:6443
-podman login -u  <Openshift ID> -p $(oc whoami -t) image-registry.openshift-image-registry.svc:5000 --tls-verify=false
+oc login https://api.npek8s.bsc.bscal.com:6443 -u <Openshift ID> 
+podman login image-registry.openshift-image-registry.svc:5000 --tls-verify=false -u  <Openshift ID> -p $(oc whoami -t) 
 podman push image-registry.openshift-image-registry.svc:5000/$NAMESPACE/helloworldopenshift:latest --tls-verify=false
 
 exit

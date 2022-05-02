@@ -34,7 +34,7 @@ Application is running when you see
 
 > The defaultServer server is ready to run a smarter planet.
 
-Test the application, submit GET request to this endpoint: 
+Test the application, submit GET request to these endpoints: 
 >http://localhost:9080/LibertyProject/system/hello 
 
 
@@ -49,6 +49,8 @@ CTRL+C
 or
 $ mvn liberty:stop
 ```
+<hr>
+
 
 # Containerization Process
 ## Create Helm chart for building the project
@@ -68,8 +70,7 @@ Go to [Artifactory](https://artifactory.bsc.bscal.com/artifactory/webapp/#/profi
 
 ```sh
 #OPTIONAL: export HOME=</c/Users/<LAN ID> for VDI users> 
-export PROP_ENV=dev2
-export NAMESPACE=${PROP_ENV}-digital
+export NAMESPACE=<namespace>
 export ARTIFACTORY_USER=<LAN ID>
 export M2_MASTER_PASSWORD=<LAN PASSWORD>
 export ARTIFACTORY_TOKEN=<PASTE TOKEN> 
@@ -169,4 +170,8 @@ exit
 - Documentation that points to the "Formal Environment" CI/CD processes
 
 - Instructions on how to involve SCRM team to get Jenkins Jobs and have pipelines used
+
+<hr>
+
+Markdown CheatSheet : https://www.markdownguide.org/cheat-sheet/
 

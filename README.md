@@ -54,6 +54,10 @@ $ helm create build
 ## TODO's
 
 ### Build and Deploy to Openshift
+- To create and validate a ```dockerfile``` you will need to install either Podman or Docker on your computer, however this is not possible on VDI
+because both Docker and Podman do not support nested virtualization, so there are a couple ways to accomplish this task
+1. Using a privileged Podman pod
+2. Using the S2I (Source to Image) build process
 
 ```sh
 # generate your bitbucket token from https://bitbucket.bsc.bscal.com/plugins/servlet/access-tokens/add

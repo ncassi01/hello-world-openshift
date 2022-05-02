@@ -44,8 +44,7 @@ LABEL \
 USER 0
 
 COPY --from=builder /tmp/app/target/*.war /config/dropins/
-COPY ./helloworldopenshift.properties /config/properties/
-COPY ./server.xml /config/
+COPY --from=builder /tmp/app/src/main/liberty/config/server.xml /config/
 
 RUN  \
   chown -R 1001:0 /config && \

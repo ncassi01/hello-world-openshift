@@ -32,8 +32,7 @@ LABEL \
 USER 0
 
 COPY ./target/*.war /config/dropins/
-COPY ./helloworldopenshift.properties /config/apps/properties/
-COPY ./server.xml /config/
+COPY ./src/main/liberty/config/server.xml /config/
 
 RUN \
   chown -R 1001:0 /config && \

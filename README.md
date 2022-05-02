@@ -87,7 +87,6 @@ oc create secret generic fadintegrationservicev2-settings-mvn --dry-run=client -
 
 kubeseal -o yaml --controller-namespace sealed-secrets </tmp/secret-settings-mvn.yaml >sealedsecrets/${PROP_ENV}/sealedsecret-${PROP_ENV}-settings-mvn.yaml
 
-
 ```
 </details>
 
@@ -95,9 +94,7 @@ kubeseal -o yaml --controller-namespace sealed-secrets </tmp/secret-settings-mvn
 - To create and validate a ```Dockerfile``` you will need to install either Podman or Docker on your computer, however this is not possible on VDI because neither Docker nor Podman support nested virtualization. Below are a of couple ways to accomplish this task;
 
 <details>
-<summary>
-1. Using the S2I (Source to Image) build process using a multi stage Dockerfile.builder
-</summary>
+<summary>1. Using the S2I (Source to Image) build process using a multi stage Dockerfile.builder</summary>
 
 Generate your **BITBUCKET_TOKEN** from https://bitbucket.bsc.bscal.com/plugins/servlet/access-tokens/add
 
@@ -117,9 +114,9 @@ helm upgrade -i helloworldopenshift-build helm/build -n ${NAMESPACE} \
 
 <details>
 <summary>2. Using a Privileged pod in OCP</summary>
+
 > You must run the below steps as a cluster-admin in ocp for this to work
  
-
 ```sh
 # export namespace to terminal
 export NAMESPACE=<namespace>
@@ -145,7 +142,6 @@ podman push image-registry.openshift-image-registry.svc:5000/$NAMESPACE/hellowor
 exit
 ```
 </details>
-
 
 
 ## TODO's

@@ -68,11 +68,12 @@ What is source-to-image (S2I)?
  - [Redhat OCP documentation](https://docs.openshift.com/container-platform/4.10/openshift_images/using_images/using-s21-images.html)
  - [An example](https://tomd.xyz/openshift-s2i-example/)
 
-Running Maven commands in Openshift requires authentication to the artifactory maven repo. This is achieved by creating and using your credentials as sealed secrets.
 <br>
 
 <details>
 <summary><b>Create Maven settings sealed secret</b></summary>
+
+Running Maven commands in Openshift requires authentication to the artifactory maven repo. This is achieved by creating and using your credentials as sealed secrets.
 
 **ARTIFACTORY_TOKEN** is required. To create one, login to [Artifactory](https://artifactory.bsc.bscal.com/artifactory/webapp/#/profile) &rarr; Click on userID on right hand corner &rarr; Create TOKEN &rarr; Copy and save token
 

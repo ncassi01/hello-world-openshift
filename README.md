@@ -59,17 +59,19 @@ Helm documentation: https://docs.bitnami.com/tutorials/create-your-first-helm-ch
 # create chart called build
 $ helm create build
 ```
-Update chart, template and values yamls.
+Update Chart, templates and values yamls (see example in this repo).
 
 ## Setup maven to use credentials in Openshift S2I Builds (Dockerfile.builder)
 
-> Access to artifactory maven repo requires authentication when accessed in openshift. The below technique offers the ability to seal your credentials and use them to run maven commands.
+> Access to artifactory maven repo requires authentication when accessed in openshift. The below technique offers the ability to seal your credentials and use them to run maven commands in Openshift.
 
-Go to [Artifactory](https://artifactory.bsc.bscal.com/artifactory/webapp/#/profile) to create ARTIFACTORY_TOKEN
--  Login to Artifactory > Click on userID on right hand corner > Create TOKEN
+<details>
+<summary>Create Maven settings sealed secret</summary>
+
+Create an **ARTIFACTORY_TOKEN**;
+-  Login to [Artifactory](https://artifactory.bsc.bscal.com/artifactory/webapp/#/profile) &rarr; Click on userID on right hand corner &rarr; Create TOKEN
 
 ```sh
-#OPTIONAL: export HOME=</c/Users/<LAN ID> for VDI users> 
 export NAMESPACE=<namespace>
 export ARTIFACTORY_USER=<LAN ID>
 export M2_MASTER_PASSWORD=<LAN PASSWORD>
@@ -79,23 +81,31 @@ envsubst <settings-security.xml > ${HOME}/.m2/settings-security.xml
 export ENCRYPTED_PASSWORD=$(mvn --encrypt-password ${ARTIFACTORY_TOKEN})
 envsubst <settings.xml > ${HOME}/.m2/settings.xml
 
-```
+# Run below commands to create the sealed secret for maven settings (one time)
 
+oc create secret generic fadintegrationservicev2-settings-mvn --dry-run=client --from-file=settings.xml=$HOME/.m2/settings.xml --from-file=settings-security.xml=$HOME/.m2/settings-security.xml -n ${NAMESPACE} -o yaml > /tmp/secret-settings-mvn.yaml
+
+kubeseal -o yaml --controller-namespace sealed-secrets </tmp/secret-settings-mvn.yaml >sealedsecrets/${PROP_ENV}/sealedsecret-${PROP_ENV}-settings-mvn.yaml
+
+
+```
+</details>
 
 ## Build and Deploy container Image to Openshift
-- To create and validate a ```dockerfile``` you will need to install either Podman or Docker on your computer, however this is not possible on VDI
-because both Docker and Podman do not support nested virtualization, so there are a couple ways to accomplish this task
+- To create and validate a ```Dockerfile``` you will need to install either Podman or Docker on your computer, however this is not possible on VDI because neither Docker nor Podman support nested virtualization. Below are a of couple ways to accomplish this task;
 
-1. Using the S2I (Source to Image) build process using Dockerfile.builder
-2. Using a privileged pod in OCP
+<details>
+<summary>
+1. Using the S2I (Source to Image) build process using a multi stage Dockerfile.builder
+</summary>
 
-### 1. Using Openshift S2I process to build Image
+Generate your **BITBUCKET_TOKEN** from https://bitbucket.bsc.bscal.com/plugins/servlet/access-tokens/add
 
 ```sh
-# generate your bitbucket token from https://bitbucket.bsc.bscal.com/plugins/servlet/access-tokens/add
+
+#OPTIONAL: export HOME=</c/Users/<LAN ID> for VDI users> 
 export BITBUCKET_TOKEN=<your bitbucket token>
 export BITBUCKET_USER=<your bitbucket username>
-export NAMESPACE=<namespace>
 
 helm upgrade -i helloworldopenshift-build helm/build -n ${NAMESPACE} \
   --set secrets.bitbucket.username=${BITBUCKET_USER} \
@@ -103,13 +113,12 @@ helm upgrade -i helloworldopenshift-build helm/build -n ${NAMESPACE} \
   --set git.ref=$(git rev-parse --abbrev-ref HEAD) \
   --set git.uri=$(git config --get remote.origin.url)
 ```
-
-
-### 2. Using a Privileged pod in OCP
-> You must run the below steps as a cluster-admin in ocp for this to work
+</details>
 
 <details>
-<summary>Click to review the steps</summary>  
+<summary>2. Using a Privileged pod in OCP</summary>
+> You must run the below steps as a cluster-admin in ocp for this to work
+ 
 
 ```sh
 # export namespace to terminal
@@ -174,4 +183,8 @@ exit
 <hr>
 
 Markdown CheatSheet : https://www.markdownguide.org/cheat-sheet/
+
+<details>
+<summary></summary>
+</details>
 

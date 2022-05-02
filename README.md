@@ -177,10 +177,6 @@ helm upgrade -i helloworldopenshift helm/helloworldopenshift -n ${NAMESPACE} \
 
 - This is still a well understood pattern even if hard to demo
 
-- The build/ deploy helm charts
-
-- An example of sealing of some secrets (already very well documented)
-
 - Horizontal Pod AutoScaling patterns
 
 - NAS connections

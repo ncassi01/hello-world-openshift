@@ -15,8 +15,8 @@ RUN mvn -s .m2/settings.xml \
         -Dmaven.wagon.http.ssl.ignore.validity.dates=true \
         clean package
 
-FROM bsc-docker-all.artifactory.bsc.bscal.com/ice/open-liberty:21.0.0.3
-
+# FROM bsc-docker-all.artifactory.bsc.bscal.com/ice/open-liberty:21.0.0.3
+FROM docker.io/open-liberty/open-liberty:22.0.0.4-full-java11-openj9
 # The version of the packaged software. The version MAY match a label or tag in the source code repository or MAY be Semantic versioning-compatible.
 ARG IMG_VERSION=1.0
 # The source control revision identifier for the packaged software.

@@ -66,7 +66,7 @@ Update Chart, templates and values yamls (see example in this repo).
 > Access to artifactory maven repo requires authentication when accessed in openshift. The below technique offers the ability to seal your credentials and use them to run maven commands in Openshift.
 
 <details>
-<summary>Create Maven settings sealed secret</summary>
+<summary><b>Create Maven settings sealed secret</b></summary>
 
 Create an **ARTIFACTORY_TOKEN**;
 -  Login to [Artifactory](https://artifactory.bsc.bscal.com/artifactory/webapp/#/profile) &rarr; Click on userID on right hand corner &rarr; Create TOKEN
@@ -94,7 +94,7 @@ kubeseal -o yaml --controller-namespace sealed-secrets </tmp/secret-settings-mvn
 - To create and validate a ```Dockerfile``` you will need to install either Podman or Docker on your computer, however this is not possible on VDI because neither Docker nor Podman support nested virtualization. Below are a of couple ways to accomplish this task;
 
 <details>
-<summary>1. Using the S2I (Source to Image) build process using a multi stage Dockerfile.builder</summary>
+<summary><b>1. Using the S2I (Source to Image) build process using a multi stage Dockerfile.builder</b></summary>
 
 Generate your **BITBUCKET_TOKEN** from https://bitbucket.bsc.bscal.com/plugins/servlet/access-tokens/add
 

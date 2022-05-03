@@ -1,15 +1,13 @@
-# Containerization Reference App for OpenLiberty Web Service Application 
+# Containerization Guide with OpenLiberty Web Service Reference Application 
 
-  The original application is from a guide on how to create a RESTful service with Jakarta Restful Web Services, JSON-B, and Open Liberty.
-  Documentation can be found here:
-  https://openliberty.io/guides/rest-intro.html
-  
-  The application can easily be extended to include other use cases such as;
-  - Consume a diplay information from a database
+## Guide Description
+This repo contains a step by step guide on how to containerize and deploy a JEE/Java webservice application. The steps can also be reused for other applications with slight divergence were the steps are technology specific. These were the same steps that were used to containerize the FAD AIP Services.
 
-  ## Application Description
+## Application Description
 
-  - The RESTful service has 2 GET endpoints that respond at the following context root URL: http://localhost:9080/LibertyProject/ 
+The application exposes RESTful services using Jakarta Restful Web Services, JSON-B, and Open Liberty.
+
+  - It has 2 GET endpoints that respond at the following context root URL: http://localhost:9080/ 
 
   1. ```/system/hello``` - returns string
   ```sh
@@ -23,9 +21,12 @@
     "java.version": "1.8"
   }
   ```
+
+Additional documentaion on the base application can be found here;
+  https://openliberty.io/guides/rest-intro.html
   
 
-### Running locally
+### How to run application locally
 To run type:
 ```sh
 $ mvn liberty:run
@@ -52,8 +53,25 @@ $ mvn liberty:stop
 <hr>
 
 
-# Containerization Process
-## Create Helm chart for building the project
+# Containerizing and running application on Openshift
+
+## Step 1: Create a ```Dockerfile``` or ```Containerfile```
+
+### Using Docker or Podman
+- To create and validate a ```Dockerfile``` you will need to install either Podman or Docker on your computer.
+- [Dockerfile checklist](https://grid.blueshieldca.com/display/RHT/Dockerfile+Checklist)
+- The included ```
+
+### Using Openshift S2I Process
+What is source-to-image (S2I)? 
+ - [source-to-image github](https://github.com/openshift/source-to-image)
+ - [Redhat OCP documentation](https://docs.openshift.com/container-platform/4.10/openshift_images/using_images/using-s21-images.html)
+ - [An example](https://tomd.xyz/openshift-s2i-example/)
+<br>
+ 
+- Create a multi-stage Dockerfile that will compile the code and and then build the image (see ```Dockerfile.builder```)
+- Create helm chart to deploy the S2I's ```deployconfig``` and ```imagestream``` resources for building and saving application image to the internal registry. 
+
 Helm documentation: https://docs.bitnami.com/tutorials/create-your-first-helm-chart/
 ```sh
 # create chart called build
@@ -61,19 +79,11 @@ $ helm create build
 ```
 Update Chart, templates and values yamls (see example in this repo).
 
-## Setup Maven credentials for Openshift source-to-image (S2I) Builds
-
-What is source-to-image (S2I)? 
- - [source-to-image github](https://github.com/openshift/source-to-image)
- - [Redhat OCP documentation](https://docs.openshift.com/container-platform/4.10/openshift_images/using_images/using-s21-images.html)
- - [An example](https://tomd.xyz/openshift-s2i-example/)
-
-<br>
+- The maven build stage requires credentials to login to artifactory, the following steps creates sealed secrets to be passed to the process
+### Setup Maven credentials for Openshift source-to-image (S2I) Builds
 
 <details>
 <summary><b>Create Maven settings sealed secret</b></summary>
-
-Running Maven commands in Openshift requires authentication to the artifactory maven repo. This is achieved by creating and using your credentials as sealed secrets.
 
 **ARTIFACTORY_TOKEN** is required. To create one, login to [Artifactory](https://artifactory.bsc.bscal.com/artifactory/webapp/#/profile) &rarr; Click on userID on right hand corner &rarr; Create TOKEN &rarr; Copy and save token
 
@@ -96,8 +106,6 @@ kubeseal -o yaml --controller-namespace sealed-secrets </tmp/secret-settings-mvn
 ```
 </details>
 
-## Build Application container Image
-- To create and validate a ```Dockerfile``` you will need to install either Podman or Docker on your computer, however this is not possible on VDI because neither Docker nor Podman support nested virtualization. Below are a of couple ways to accomplish this task;
 
 <details>
 <summary><b>1. Using the S2I build process with a multi stage Dockerfile.builder</b></summary>
@@ -165,13 +173,13 @@ helm upgrade -i helloworldopenshift helm/helloworldopenshift -n ${NAMESPACE} \
 
 Once deployed successfully the applicatio endpoints can be accessed by using the route provided in as follows:
 Test the application, submit GET request to these endpoints: 
->https://helloworldopenshift-<NAMESPACE>.apps.npek8s.bsc.bscal.com/system/hello 
+>https://helloworldopenshift-$NAMESPACE.apps.npek8s.bsc.bscal.com/system/hello 
 
 
->https://helloworldopenshift-<NAMESPACE>.apps.npek8s.bsc.bscal.com//system/properties 
+>https://helloworldopenshift-$NAMESPACE.apps.npek8s.bsc.bscal.com//system/properties 
 
 Home page:
->https://helloworldopenshift-<NAMESPACE>.apps.npek8s.bsc.bscal.com//
+>https://helloworldopenshift-$NAMESPACE>.apps.npek8s.bsc.bscal.com//
 
 
 ## TODO's

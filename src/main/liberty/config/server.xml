@@ -5,6 +5,10 @@
     <feature>jsonb-2.0</feature>
   </featureManager>
 
+  <variable name="default.http.port" defaultValue="9081"/>
+  <variable name="default.https.port" defaultValue="9444"/>
+  <variable name="app.context.root" defaultValue="/"/>
+
   <!-- tag::httpEndpoint[] -->
   <httpEndpoint httpPort="${default.http.port}" httpsPort="${default.https.port}"
                 id="defaultHttpEndpoint" host="*" />

@@ -47,7 +47,7 @@ LABEL \
 
 USER 0
 
-COPY --from=builder /tmp/app/target/*.war /config/dropins/
+COPY --from=builder /tmp/app/target/*.war /config/apps/
 COPY --from=builder /tmp/app/src/main/liberty/config/server.xml /config/
 
 RUN  \

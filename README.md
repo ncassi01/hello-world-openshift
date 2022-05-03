@@ -176,8 +176,6 @@ Home page:
 
 ## TODO's
 
-- Helm deploy project
-
 - The server.xml + datasources.xml patterns.
 
 - THE MOST DIFFICULT PART is simulating a database connection (toy DB)
@@ -204,7 +202,4 @@ Home page:
 
 Markdown CheatSheet : https://www.markdownguide.org/cheat-sheet/
 
-<details>
-<summary></summary>
-</details>
 

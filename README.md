@@ -63,11 +63,11 @@ $ mvn liberty:stop
 
 
 ### Using Openshift S2I Process
-What is source-to-image (S2I)? 
- - [source-to-image github](https://github.com/openshift/source-to-image)
- - [Redhat OCP documentation](https://docs.openshift.com/container-platform/4.10/openshift_images/using_images/using-s21-images.html)
- - [An example](https://tomd.xyz/openshift-s2i-example/)
-<br>
+>What is source-to-image (S2I)? 
+> - [source-to-image github](https://github.com/openshift/source-to-image)
+> - [Redhat OCP documentation](https://docs.openshift.com/container-platform/4.10/openshift_images/using_images/using-s21-images.html)
+> - [An example](https://tomd.xyz/openshift-s2i-example/)
+>
  
 - Create a multi-stage Dockerfile that will compile the code and and then build the image (see ```Dockerfile.builder```)
 - Create helm chart to deploy the S2I's ```deployconfig``` and ```imagestream``` resources for building and saving application image to the internal registry. 

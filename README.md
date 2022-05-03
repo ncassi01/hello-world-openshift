@@ -1,7 +1,7 @@
 # Containerization Guide with OpenLiberty Web Service Reference Application 
 
 ## Guide Description
-This repo contains a step by step guide on how to containerize and deploy a JEE/Java webservice application. The steps can also be reused for other applications with slight divergence were the steps are technology specific. These were the same steps that were used to containerize the FAD AIP Services.
+This repo contains a step by step guide on how to containerize and deploy a JEE/Java webservice application. The steps can also be reused for other applications with slight divergence were the steps are technology specific. These were the steps used to containerize the FAD AIP Services.
 
 ## Application Description
 
@@ -60,7 +60,7 @@ $ mvn liberty:stop
 ### Using Docker or Podman
 - To create and validate a ```Dockerfile``` you will need to install either Podman or Docker on your computer.
 - [Dockerfile checklist](https://grid.blueshieldca.com/display/RHT/Dockerfile+Checklist)
-- The included ```
+
 
 ### Using Openshift S2I Process
 What is source-to-image (S2I)? 

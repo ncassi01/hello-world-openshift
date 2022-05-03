@@ -163,6 +163,17 @@ helm upgrade -i helloworldopenshift helm/helloworldopenshift -n ${NAMESPACE} \
   --set image.tag=latest 
 ```
 
+Once deployed successfully the applicatio endpoints can be accessed by using the route provided in as follows:
+Test the application, submit GET request to these endpoints: 
+>https://helloworldopenshift-<NAMESPACE>.apps.npek8s.bsc.bscal.com/system/hello 
+
+
+>https://helloworldopenshift-<NAMESPACE>.apps.npek8s.bsc.bscal.com//system/properties 
+
+Home page:
+>https://helloworldopenshift-<NAMESPACE>.apps.npek8s.bsc.bscal.com//
+
+
 ## TODO's
 
 - Helm deploy project

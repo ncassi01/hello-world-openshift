@@ -57,12 +57,14 @@ $ mvn liberty:stop
 
 ## Step 1: Create a ```Dockerfile``` or ```Containerfile```
 
-### Using Docker or Podman
+- There are 3 ways to do this
+
+### 1. Using Docker or Podman
 - To create and validate a ```Dockerfile``` you will need to install either Podman or Docker on your computer.
 - [Dockerfile checklist](https://grid.blueshieldca.com/display/RHT/Dockerfile+Checklist)
 
 
-### Using Openshift S2I Process
+### 2. Using Openshift S2I Process
 >What is source-to-image (S2I)? 
 > - [source-to-image github](https://github.com/openshift/source-to-image)
 > - [Redhat OCP documentation](https://docs.openshift.com/container-platform/4.10/openshift_images/using_images/using-s21-images.html)
@@ -81,11 +83,10 @@ $ helm create build
 
 - The maven build stage requires credentials to login to artifactory, the following steps creates sealed secrets to be passed to the process
 
-<details>
-<summary><b>Steps to create Maven settings sealed secret</b></summary>
+<b>Steps to create Maven settings sealed secret</b>
 
 - Get an **ARTIFACTORY_TOKEN**. To create one, login to [Artifactory](https://artifactory.bsc.bscal.com/artifactory/webapp/#/profile) &rarr; Click on userID on right hand corner &rarr; Create TOKEN &rarr; Copy and save token
-- use the below steps on a terminal to seal the ```settings.xml``` and ```security-settings.xml``` with artifactory credentials 
+- use the below steps on a terminal to seal the ```settings.xml``` and ```security-settings.xml``` with artifactory credentials to be used in the maven build.
 ```sh
 export NAMESPACE=<namespace>
 export ARTIFACTORY_USER=<LAN ID>
@@ -103,14 +104,9 @@ oc create secret generic helloworldopenshift-settings-mvn --dry-run=client --fro
 kubeseal -o yaml --controller-namespace sealed-secrets </tmp/secret-settings-mvn.yaml >sealedsecrets/sealedsecret-settings-mvn.yaml -n $NAMESPACE
 
 ```
-</details>
+### Deploy ```buildconfig``` with helm to compile and build application image.
 
-
-<details>
-<summary><b>1. Using the S2I build process with a multi stage Dockerfile.builder</b></summary>
-
-Generate your **BITBUCKET_TOKEN** from https://bitbucket.bsc.bscal.com/plugins/servlet/access-tokens/add
-
+- Generate your **BITBUCKET_TOKEN** from https://bitbucket.bsc.bscal.com/plugins/servlet/access-tokens/add
 ```sh
 
 #OPTIONAL: export HOME=</c/Users/<LAN ID> for VDI users> 
@@ -124,12 +120,8 @@ helm upgrade -i helloworldopenshift-build helm/build -n ${NAMESPACE} \
   --set git.uri=$(git config --get remote.origin.url) \
   --set-file sealedSecret.settingsMvn=sealedsecrets/sealedsecret-settings-mvn.yaml
 ```
-</details>
 
-<br>
-
-<details>
-<summary><b>2. Using a Privileged pod in OCP</b></summary>
+## 3. Using a Privileged pod in OCP
 
 > You must run the below steps as a cluster-admin in ocp for this to work
  
@@ -157,10 +149,9 @@ podman push image-registry.openshift-image-registry.svc:5000/$NAMESPACE/hellowor
 
 exit
 ```
-</details>
 
 
-## Deploy Application in Openshift
+## Step 2: Deploying Application to ```Openshift```
 
 Create the application helm Chart and deploy and application to Openshift
 

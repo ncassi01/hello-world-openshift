@@ -84,8 +84,8 @@ $ helm create build
 <details>
 <summary><b>Steps to create Maven settings sealed secret</b></summary>
 
-**ARTIFACTORY_TOKEN** is required. To create one, login to [Artifactory](https://artifactory.bsc.bscal.com/artifactory/webapp/#/profile) &rarr; Click on userID on right hand corner &rarr; Create TOKEN &rarr; Copy and save token
-
+- Get an **ARTIFACTORY_TOKEN**. To create one, login to [Artifactory](https://artifactory.bsc.bscal.com/artifactory/webapp/#/profile) &rarr; Click on userID on right hand corner &rarr; Create TOKEN &rarr; Copy and save token
+- use the below steps on a terminal to seal the ```settings.xml``` and ```security-settings.xml``` with artifactory credentials 
 ```sh
 export NAMESPACE=<namespace>
 export ARTIFACTORY_USER=<LAN ID>

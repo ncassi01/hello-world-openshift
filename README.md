@@ -76,8 +76,8 @@ Helm documentation: https://docs.bitnami.com/tutorials/create-your-first-helm-ch
 ```sh
 # create chart called build
 $ helm create build
+# Update Chart, templates and values yamls (see example in this repo).
 ```
-Update Chart, templates and values yamls (see example in this repo).
 
 - The maven build stage requires credentials to login to artifactory, the following steps creates sealed secrets to be passed to the process
 

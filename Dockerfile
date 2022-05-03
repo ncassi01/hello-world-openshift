@@ -1,6 +1,7 @@
 # this base image is from the infra cloud engineering team
 # TODO blocked by image scanning... we need a solution to pull in latest from dockerhub
-FROM bsc-docker-all.artifactory.bsc.bscal.com/ice/open-liberty:21.0.0.3
+# FROM bsc-docker-all.artifactory.bsc.bscal.com/ice/open-liberty:21.0.0.3
+FROM quay.io/ohthree/open-liberty:22.0.0.4
 # The version of the packaged software. The version MAY match a label or tag in the source code repository or MAY be Semantic versioning-compatible.
 ARG IMG_VERSION=1.0
 # The source control revision identifier for the packaged software.
@@ -31,7 +32,7 @@ LABEL \
 
 USER 0
 
-COPY ./target/*.war /config/dropins/
+COPY ./target/*.war /config/apps/
 COPY ./src/main/liberty/config/server.xml /config/
 
 RUN \

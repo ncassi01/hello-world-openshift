@@ -16,6 +16,6 @@
   <!-- end::httpEndpoint[] -->
   
   <!-- tag::webApplication[] -->
-  <webApplication location="hello-world-openshift.war" contextRoot="${app.context.root}"/>
+  <webApplication location="hello-world-openshift.war" contextRoot="/"/>
   <!-- end::webApplication[] -->
 </server>

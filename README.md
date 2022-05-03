@@ -104,7 +104,7 @@ oc create secret generic helloworldopenshift-settings-mvn --dry-run=client --fro
 kubeseal -o yaml --controller-namespace sealed-secrets </tmp/secret-settings-mvn.yaml >sealedsecrets/sealedsecret-settings-mvn.yaml -n $NAMESPACE
 
 ```
-### Deploy ```buildconfig``` with helm to compile and build application image.
+#### Deploy ```buildconfig``` with helm to compile and build application image.
 
 - Generate your **BITBUCKET_TOKEN** from https://bitbucket.bsc.bscal.com/plugins/servlet/access-tokens/add
 ```sh
@@ -121,7 +121,7 @@ helm upgrade -i helloworldopenshift-build helm/build -n ${NAMESPACE} \
   --set-file sealedSecret.settingsMvn=sealedsecrets/sealedsecret-settings-mvn.yaml
 ```
 
-## 3. Using a Privileged pod in OCP
+### 3. Using a Privileged pod in OCP
 
 > You must run the below steps as a cluster-admin in ocp for this to work
  

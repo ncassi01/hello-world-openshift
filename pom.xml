@@ -14,7 +14,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <!-- Liberty configuration -->
         <!-- tag::defaultHttpPort[] -->
-        <liberty.var.default.http.port>9080</liberty.var.default.http.port>
+        <liberty.var.default.http.port>9081</liberty.var.default.http.port>
         <!-- end::defaultHttpPort[] -->
         <!-- tag::defaultHttpsPort[] -->
         <liberty.var.default.https.port>9443</liberty.var.default.https.port>

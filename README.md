@@ -80,10 +80,9 @@ $ helm create build
 Update Chart, templates and values yamls (see example in this repo).
 
 - The maven build stage requires credentials to login to artifactory, the following steps creates sealed secrets to be passed to the process
-### Setup Maven credentials for Openshift source-to-image (S2I) Builds
 
 <details>
-<summary><b>Create Maven settings sealed secret</b></summary>
+<summary><b>Steps to create Maven settings sealed secret</b></summary>
 
 **ARTIFACTORY_TOKEN** is required. To create one, login to [Artifactory](https://artifactory.bsc.bscal.com/artifactory/webapp/#/profile) &rarr; Click on userID on right hand corner &rarr; Create TOKEN &rarr; Copy and save token
 

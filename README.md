@@ -171,29 +171,25 @@ helm upgrade -i helloworldopenshift helm/helloworldopenshift -n ${NAMESPACE} \
 > https://helloworldopenshift-$NAMESPACE.apps.npek8s.bsc.bscal.com/
 >
 
-## TODO's
+# TODO's (Patterns)
 
-- The server.xml + datasources.xml patterns.
+## Database connections Pattern
+- The server.xml + datasources.xml patterns. Simulating a database connection Will require development hours. Possible just to read from a real db? ... Or we deploy something? ... But then drivers will be different if we dont connect with denodo, facets, or elastic search. Suggestion is to document the pattern without any DB connections and point to implementation on existing repos with pattern namely FADIntegrationServiceV2, ProviderReviewServiceV2, ProviderSearchDataServiceV3, ProviderSearchMetaDataServiceV2.
 
-- THE MOST DIFFICULT PART is simulating a database connection (toy DB)
+## NAS Pertistent Volumes Pattern
+- Similar to above implemented in DowloadProviderSearchPDFServiceV2, ProviderSearchDataServicev2, ProviderSearchDataServicev3
 
-- Possible just to read from a real db? ... Or we deploy something? ... But then drivers will be different if we dont connect with denodo, facits, or elastic search...
+## Horizontal Pod AutoScaling patterns
+- Implementable in for this app
 
-- But we can just put dead database connection patterns in the repo?
+## CICD Pattern
+- Jenkins CI
+- ArgoCD 
+- Instructions on how to engage SCRM team to get Jenkins Jobs and have pipelines used
 
-- This is still a well understood pattern even if hard to demo
-
-- Horizontal Pod AutoScaling patterns
-
-- NAS connections
-
+## Observability Patterns
 - Monitoring use tie in (This is still kinda fuzzy because monitoring team still hasnt showed any actual integration)
-
-- Argo Charts that can be used in a personal namespace
-
-- Documentation that points to the "Formal Environment" CI/CD processes
-
-- Instructions on how to involve SCRM team to get Jenkins Jobs and have pipelines used
+- Service Mesh 
 
 <hr>
 

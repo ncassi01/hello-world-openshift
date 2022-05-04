@@ -173,6 +173,9 @@ helm upgrade -i helloworldopenshift helm/helloworldopenshift -n ${NAMESPACE} \
 
 # TODO's (Patterns)
 
+## Sealed Secrets Pattern
+- How to create a sealed secret
+
 ## Database connections Pattern
 - The server.xml + datasources.xml patterns. Simulating a database connection Will require development hours. Possible just to read from a real db? ... Or we deploy something? ... But then drivers will be different if we dont connect with denodo, facets, or elastic search. Suggestion is to document the pattern without any DB connections and point to implementation on existing repos with pattern namely FADIntegrationServiceV2, ProviderReviewServiceV2, ProviderSearchDataServiceV3, ProviderSearchMetaDataServiceV2.
 

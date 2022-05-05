@@ -17,4 +17,13 @@
   <!-- tag::webApplication[] -->
   <webApplication location="hello-world-openshift.war" contextRoot="${app.context.root}" />
   <!-- end::webApplication[] -->
+
+  <!-- Enable CORS -->
+  <cors domain="/api"
+    allowedOrigins="*"
+    allowedMethods="GET, POST, OPTIONS, DELETE"
+    allowCredentials="true"
+    allowedHeaders=" Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization"
+    maxAge="3600"/>
+
 </server>

@@ -20,7 +20,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
 // tag::path[]
-@Path("properties")
+@Path("/properties")
 // end::path[]
 public class PropertiesResource {
 

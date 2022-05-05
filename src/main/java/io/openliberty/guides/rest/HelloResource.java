@@ -6,7 +6,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
 // tag::path[]
-@Path("hello")
+@Path("/hello")
 // end::path[]
 public class HelloResource {
 

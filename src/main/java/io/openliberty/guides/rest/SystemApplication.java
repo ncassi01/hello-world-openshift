@@ -16,7 +16,7 @@ import jakarta.ws.rs.core.Application;
 import jakarta.ws.rs.ApplicationPath;
 
 // tag::applicationPath[]
-@ApplicationPath("system")
+@ApplicationPath("/api")
 // end::applicationPath[]
 // tag::systemApplication[]
 public class SystemApplication extends Application {

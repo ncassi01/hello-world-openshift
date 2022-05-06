@@ -41,10 +41,10 @@ Application is running when you see
 > The defaultServer server is ready to run a smarter planet.
 
 Test the application, submit GET request to these endpoints: 
->http://localhost:9081/system/hello 
+>http://localhost:9081/api/hello 
 
 
->http://localhost:9081/system/properties 
+>http://localhost:9081/api/properties 
 
 Home page:
 >http://localhost:9081/

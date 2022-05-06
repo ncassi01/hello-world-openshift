@@ -9,16 +9,21 @@ The application exposes RESTful services using Jakarta Restful Web Services, JSO
 
   - It has 2 GET endpoints that respond at the following context root URL: http://localhost:9080/ 
 
-  1. ```/system/hello``` - returns string
+  1. ```/api/hello``` - returns string
   ```sh
   Hello World
   ``` 
   
-  2. ```/system/properties``` - returns a JSON  of the system properties like this:
+  2. ```/api/properties``` - returns a JSON  of the system properties like this:
   ```sh
   {
-    "os.name":"Mac",
-    "java.version": "1.8"
+	"java.vendor": "IBM Corporation",
+	"java.vm.version": "openj9-0.32.0",
+	"java.specification.version": "11",
+	"jdk.extensions.version": "11.0.15.0",
+	"com.ibm.ws.beta.edition": "false",
+	"sun.jnu.encoding": "UTF-8",
+	"wlp.install.dir": "/opt/ol/wlp/"
   }
   ```
 
@@ -163,15 +168,20 @@ helm upgrade -i helloworldopenshift helm/helloworldopenshift -n ${NAMESPACE} \
 
 > Once deployed successfully the applicatio endpoints can be accessed by using the route provided in as follows:
 > Test the application, submit GET request to these endpoints: 
-> https://helloworldopenshift-$NAMESPACE.apps.npek8s.bsc.bscal.com/system/hello 
+> https://helloworldopenshift-$NAMESPACE.apps.npek8s.bsc.bscal.com/api/hello 
 >
-> https://helloworldopenshift-$NAMESPACE.apps.npek8s.bsc.bscal.com//system/properties 
+> https://helloworldopenshift-$NAMESPACE.apps.npek8s.bsc.bscal.com/api/properties 
 > 
 > Home page:
 > https://helloworldopenshift-$NAMESPACE.apps.npek8s.bsc.bscal.com/
 >
 
-# TODO's (Patterns)
+## Containerization Workflow
+![Flow](images/containerization-workflow.jpg)
+
+
+
+# TODO's
 
 ## Sealed Secrets Pattern
 - How to create a sealed secret
@@ -194,6 +204,7 @@ helm upgrade -i helloworldopenshift helm/helloworldopenshift -n ${NAMESPACE} \
 - Monitoring use tie in (This is still kinda fuzzy because monitoring team still hasnt showed any actual integration)
 - Service Mesh 
 
+#
 <hr>
 
 Markdown CheatSheet : https://www.markdownguide.org/cheat-sheet/

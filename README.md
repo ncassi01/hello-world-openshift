@@ -88,6 +88,8 @@ $ helm create build
 
 - The maven build stage requires credentials to login to artifactory, the following steps creates sealed secrets to be passed to the process
 
+- <a href="#sealedsecret">How To create Sealed Secret</a>
+
 <b>Steps to create Maven settings sealed secret</b>
 
 - Get an **ARTIFACTORY_TOKEN**. To create one, login to [Artifactory](https://artifactory.bsc.bscal.com/artifactory/webapp/#/profile) &rarr; Click on userID on right hand corner &rarr; Create TOKEN &rarr; Copy and save token
@@ -179,12 +181,33 @@ helm upgrade -i helloworldopenshift helm/helloworldopenshift -n ${NAMESPACE} \
 ## Containerization Workflow
 ![Flow](images/containerization-workflow.jpg)
 
+<h2 id="sealedsecret">Sealed Secrets Pattern</h2>
+
+- Why create a sealed secret?
+> It is bad practice to add plaintext passwords or tokens to bitbucket or public repository for example property files that contain username and passwords or tokens and other secrets. These should always be encrypted
+
+- Openshift Secrets are encoded (base64) NOT encrypted, meaning they can be easily decoded.
+- we use [Sealed Secrets](https://docs.bitnami.com/tutorials/sealed-secrets) to create a "one-way" encrypted secret which can be checkin to bitbucket repository
+> The 2 step process uses ```oc``` and ```kubeseal``` cli tools to create then encrypt the YAML/JSON Openshift Secret Object. Downlod ```oc``` tool from Openshift and ```kubeseal``` [here](https://github.com/bitnami-labs/sealed-secrets/releases)
+
+- This a 2 step process
+
+1. Create the Openshift Secret using ```oc``` (example using the secrets files in /secrets/files)
+```sh
+oc create secret generic mysecrets --dry-run=client --from-file=/secrets/files/mysecrets.properties -o yaml -n ${NAMESPACE} >/tmp/mysecret.yaml
+```
+
+2. Create the Sealed Secret using ```kubeseal```
+```sh
+kubeseal -o yaml --controller-namespace sealed-secrets </tmp/mysecret.yaml >sealedsecrets/sealedsecret-mysecrets.yaml
+```
+
+- Alternatively run the generate_sealedsecrets script
+./generate_sealedsecrets.sh
 
 
 # TODO's
 
-## Sealed Secrets Pattern
-- How to create a sealed secret
 
 ## Database connections Pattern
 - The server.xml + datasources.xml patterns. Simulating a database connection Will require development hours. Possible just to read from a real db? ... Or we deploy something? ... But then drivers will be different if we dont connect with denodo, facets, or elastic search. Suggestion is to document the pattern without any DB connections and point to implementation on existing repos with pattern namely FADIntegrationServiceV2, ProviderReviewServiceV2, ProviderSearchDataServiceV3, ProviderSearchMetaDataServiceV2.

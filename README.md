@@ -62,7 +62,7 @@ $ mvn liberty:stop
 
 ## Step 1: Create a ```Dockerfile``` or ```Containerfile```
 
-- There are 3 ways to do this
+- There are 2 ways to do this
 
 ### 1. Using Docker or Podman
 - To create and validate a ```Dockerfile``` you will need to install either Podman or Docker on your computer.
@@ -128,36 +128,6 @@ helm upgrade -i helloworldopenshift-build helm/build -n ${NAMESPACE} \
   --set-file sealedSecret.settingsMvn=sealedsecrets/sealedsecret-settings-mvn.yaml
 ```
 
-### 3. Using a Privileged pod in OCP
-
-> You must run the below steps as a cluster-admin in ocp for this to work
- 
-```sh
-# export namespace to terminal
-export NAMESPACE=<namespace>
-
-# deploy the privileged pod as a cluster-admin...
-helm upgrade -i podman helm/podman/ -n $NAMESPACE
-
-# build the image (multi-stage build)...
-oc exec -it devtools -n $NAMESPACE bash 
-export NAMESPACE=<namespace>
-cd /tmp
-git config --global http.sslVerify false
-git clone https://bitbucket.blueshieldca.com/scm/~agimei01/helloworldopenshift.git
-cd helloworldopenshift
-podman login bsc-docker-all.artifactory.bsc.bscal.com --tls-verify=false
-podman build -t image-registry.openshift-image-registry.svc:5000/$NAMESPACE/helloworldopenshift:latest -f Dockerfile.builder.podman --tls-verify=false
-
-# push to internal openshift registry...
-oc login https://api.npek8s.bsc.bscal.com:6443 -u <Openshift ID> 
-podman login image-registry.openshift-image-registry.svc:5000 --tls-verify=false -u  <Openshift ID> -p $(oc whoami -t) 
-podman push image-registry.openshift-image-registry.svc:5000/$NAMESPACE/helloworldopenshift:latest --tls-verify=false
-
-exit
-```
-
-
 ## Step 2: Deploying Application to ```Openshift```
 
 Create the application helm Chart and deploy and application to Openshift
@@ -184,7 +154,7 @@ helm upgrade -i helloworldopenshift helm/helloworldopenshift -n ${NAMESPACE} \
 <h2 id="sealedsecret">Sealed Secrets Pattern</h2>
 
 - Why create a sealed secret?
-> It is bad practice to add plaintext passwords or tokens to bitbucket or public repository for example property files that contain username and passwords or tokens and other secrets. These should always be encrypted
+> It is bad practice to add plaintext passwords or tokens to bitbucket or public repository. For example, do not add property files that contain username and passwords or tokens and other secrets to bitbucket. These should always be encrypted before checking into the repository
 
 - Openshift Secrets are encoded (base64) NOT encrypted, meaning they can be easily decoded.
 - we use [Sealed Secrets](https://docs.bitnami.com/tutorials/sealed-secrets) to create a "one-way" encrypted secret which can be checkin to bitbucket repository

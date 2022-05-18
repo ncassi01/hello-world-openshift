@@ -88,7 +88,7 @@ $ helm create build
 
 - The maven build stage requires credentials to login to artifactory, the following steps creates sealed secrets to be passed to the process
 
-- <a href="#sealedsecret">How To create Sealed Secret</a>
+- Go to <a href="#sealedsecret">How To create Sealed Secret</a> section below.
 
 <b>Steps to create Maven settings sealed secret</b>
 
@@ -153,8 +153,8 @@ helm upgrade -i helloworldopenshift helm/helloworldopenshift -n ${NAMESPACE} \
 
 <h2 id="sealedsecret">Sealed Secrets Pattern</h2>
 
-- Why create a sealed secret?
-> It is bad practice to add plaintext passwords or tokens to bitbucket or public repository. For example, do not add property files that contain username and passwords or tokens and other secrets to bitbucket. These should always be encrypted before checking into the repository
+- Why use Sealed Secrets?
+> It is insecure and generally bad practice to add passwords or tokens to bitbucket or public repository. For example, do not add property files that contain username and passwords or tokens and other secrets to bitbucket. These should always be encrypted before checking into the repository
 
 - Openshift Secrets are encoded (base64) NOT encrypted, meaning they can be easily decoded.
 - we use [Sealed Secrets](https://docs.bitnami.com/tutorials/sealed-secrets) to create a "one-way" encrypted secret which can be checkin to bitbucket repository

@@ -5,5 +5,5 @@ target/
 .settings/
 .DS_store
 .vscode/
-/secrets/*/*
+
 

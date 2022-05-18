@@ -175,15 +175,38 @@ kubeseal -o yaml --controller-namespace sealed-secrets </tmp/mysecret.yaml >seal
 - Alternatively run the generate_sealedsecrets script
 ./generate_sealedsecrets.sh
 
-
-# TODO's
-
-
 ## Database connections Pattern
-- The server.xml + datasources.xml patterns. Simulating a database connection Will require development hours. Possible just to read from a real db? ... Or we deploy something? ... But then drivers will be different if we dont connect with denodo, facets, or elastic search. Suggestion is to document the pattern without any DB connections and point to implementation on existing repos with pattern namely FADIntegrationServiceV2, ProviderReviewServiceV2, ProviderSearchDataServiceV3, ProviderSearchMetaDataServiceV2.
+### Externalizing the ```datasources``` from ```server.xml``` 
+
+- This AIP services use ```JNDI``` lookup to connect to multiple databases. The connections to these databases are configured in ```datasource``` elements which are associated with specific ```JDBC``` providers for the database connectivity. Each database provider has its specific drivers eg ```Oracle``` drivers.
+- Each DB connection is configured in a ```datasource``` element in ```server.xml``` with the connection string and database credentials. 
+- In order to secure these passwords for the database connections, the ```datasource``` elements have been externalized to a ```datasource-$db.xml``` file that is then referenced in ```server.xml```, for example;
+
+```xml 
+<include location="datasource-exampledb.xml" onConflict="REPLACE" optional="true" />
+```
+
+- An example of the externalized ```datasource```;
+```xml
+<server>
+    <dataSource jndiName="jdbc/examledb" type="javax.sql.DataSource">
+        <jdbcDriver libraryRef="oracle-jdbcLib" />
+        <properties.oracle URL="jdbc:oracle:thin:@//EXAMPLEDB:12345/EXAMPLEDB" databaseName="EXAMPLEDB" driverType="thin" password="dbp455w0rd" portNumber="12521" serverName="EXAMPLEDB" user="dbus3r" />
+    </dataSource>
+</server>>
+```
+- These are then encrypted as a sealedsecrets then checked into ```bitbucket``` in the ```/sealedsecrets``` folder.
+- During deployment, these ```datasource``` fragments are then mounted to the same location as the ```server.xml``` namely ```/config/```
+
+#### Sealing the datasources
+- Use the <b>Sealed Secrets Pattern</b> process above.
 
 ## NAS Pertistent Volumes Pattern
-- Similar to above implemented in DowloadProviderSearchPDFServiceV2, ProviderSearchDataServicev2, ProviderSearchDataServicev3
+- Some services require access to persist and read files to and from NAS servers. This requires the use of a ```Persistent volume``` that mounts the specific NAS location to be available in the namespace.
+- A ```persisitent volume claim``` to the ```pv``` is then created and the application deployment mounts the ```pvc```
+- An example ```helloworldopenshift-pvc``` is added to this deployment and is mounted to ```/nfs```  
+
+# TODO's
 
 ## Horizontal Pod AutoScaling patterns
 - Implementable in for this app

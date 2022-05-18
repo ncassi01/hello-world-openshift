@@ -26,4 +26,12 @@
     allowedHeaders=" Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization"
     maxAge="3600"/>
 
+    <!-- To Externalize Database connections secrets -->
+    <!-- 
+    <include location="datasource-exampledb.xml" onConflict="REPLACE" optional="true" />
+    <library id="oracle-jdbcLib">
+        <fileset dir="/config/libraries/oracle/" includes="*.jar" />
+    </library>
+    -->
+
 </server>

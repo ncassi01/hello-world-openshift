@@ -55,6 +55,16 @@ spec:
             failureThreshold: 3
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+          {{- if .Values.datasourcename }}
+            - name: datasource-exampledb
+              mountPath: /config/datasource-exampledb.xml
+              subPath: datasource-exampledb.xml
+          {{- end }}
+          {{- if .Values.persistence.enabled }}
+            - name: {{ .Values.persistence.claimName }} 
+              mountPath: /nfs/
+          {{- end }}
           {{- if .Values.env }}
           env:
             {{- toYaml .Values.env | nindent 12 }}
@@ -71,3 +81,16 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      volumes:
+      {{- if .Values.datasourcename }}
+        - name: datasource-exampledb
+          secret:
+            secretName: helloworld-datasource-denodo
+            optional: false
+      {{- end }}
+      {{- if .Values.persistence.enabled }}
+        - name: {{ .Values.persistence.claimName }} 
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.claimName }}   
+      {{- end }}
+

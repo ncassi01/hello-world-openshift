@@ -95,3 +95,14 @@ affinity:
 env:
   - name: TZ
     value: America/Los_Angeles
+
+# add datasource name to enable volume mounts for secrets in deployment
+datasourcename: 
+
+# Persist data to a persitent volume
+persistence:
+  enabled: true
+# use --set=persistence.claimName=pvc-name
+  claimName: helloworldopenshift-pvc
+  accessMode: ReadWriteOnce
+  size: 1Gi

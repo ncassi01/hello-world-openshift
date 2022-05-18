@@ -55,8 +55,13 @@ process () {
       
     if [[ -f "$FILE" ]]; then
 
-      FILENAME="$(basename $FILE)"
-      
+      # get filename without extention
+      if [[ "$FILE" == *"properties"* ]]; then
+        FILENAME="$(basename $FILE .properties)"
+      elif [[ "$FILE" == *"xml"* ]]; then
+        FILENAME="$(basename $FILE .xml)"
+      fi
+
       echo "Sealing secrets $FILENAME for namespace=$NAMESPACE in cluster=$CLUSTER"
    
       oc create secret generic $FILENAME --dry-run=client --from-file=$FILE -o yaml -n ${NAMESPACE} >/tmp/mysecret.yaml

@@ -203,9 +203,10 @@ kubeseal -o yaml --controller-namespace sealed-secrets </tmp/mysecret.yaml >seal
 - Use the <b>Sealed Secrets Pattern</b> process above.
 
 ## NAS Pertistent Volumes Pattern
-- Some services require access to persist and read files to and from NAS servers. This requires the use of a ```Persistent volume``` that mounts the specific NAS location to be available in the namespace.
+- Some services require access to persist and/or read files to and from NAS servers. 
+- This requires the use of a ```Persistent volume``` that mounts the specific NAS location to be available in the namespace.
 - A ```persisitent volume claim``` to the ```pv``` is then created and the application deployment mounts the ```pvc```
-- An example ```helloworldopenshift-pvc``` is added to this deployment and is mounted to ```/nfs```  
+- An example ```helloworldopenshift-pvc``` has been added to ```deployment.yaml``` and is mounted to ```/nfs```  
 
 # TODO's
 

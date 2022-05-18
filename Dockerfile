@@ -34,6 +34,11 @@ USER 0
 
 COPY ./target/*.war /config/apps/
 COPY ./src/main/liberty/config/server.xml /config/
+# enable for database connections
+# COPY ./target/hello-world-openshift/WEB-INF/lib/ojdbc* /config/libraries/oracle/
+# COPY ./target/hello-world-openshift/WEB-INF/lib/commons-dbcp* /config/libraries/oracle/
+# COPY ./target/hello-world-openshift/WEB-INF/lib/commons-lang-2.6* /config/libraries/oracle/
+# COPY ./target/hello-world-openshift/WEB-INF/lib/commons-pool-1.6* /config/libraries/oracle/
 
 RUN \
   chown -R 1001:0 /config && \

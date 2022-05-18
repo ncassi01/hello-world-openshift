@@ -180,7 +180,7 @@ kubeseal -o yaml --controller-namespace sealed-secrets </tmp/mysecret.yaml >seal
 
 - This AIP services use ```JNDI``` lookup to connect to multiple databases. The connections to these databases are configured in ```datasource``` elements which are associated with specific ```JDBC``` providers for the database connectivity. Each database provider has its specific drivers eg ```Oracle``` drivers.
 - Each DB connection is configured in a ```datasource``` element in ```server.xml``` with the connection string and database credentials. 
-- In order to secure these passwords for the database connections, the ```datasource``` elements have been externalized to a ```datasource-$db.xml``` file that is then referenced in ```server.xml```, for example;
+- In order to secure the database passwords, the ```datasource``` elements need to be externalized to a ```datasource-$db.xml``` file that is then referenced in ```server.xml```, for example;
 
 ```xml 
 <include location="datasource-exampledb.xml" onConflict="REPLACE" optional="true" />
@@ -197,6 +197,7 @@ kubeseal -o yaml --controller-namespace sealed-secrets </tmp/mysecret.yaml >seal
 ```
 - These are then encrypted as a sealedsecrets then checked into ```bitbucket``` in the ```/sealedsecrets``` folder.
 - During deployment, these ```datasource``` fragments are then mounted to the same location as the ```server.xml``` namely ```/config/```
+- This app contains an example of how to use this pattern, see comments and commented out code in the following files ```/src/main/liberty/config/server.xml```, ```pom.xml```, ```deployment.yaml```, ```values.yaml``` and ```Dockerfile```
 
 #### Sealing the datasources
 - Use the <b>Sealed Secrets Pattern</b> process above.

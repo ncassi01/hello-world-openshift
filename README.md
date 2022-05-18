@@ -202,16 +202,18 @@ kubeseal -o yaml --controller-namespace sealed-secrets </tmp/mysecret.yaml >seal
 #### Sealing the datasources
 - Use the <b>Sealed Secrets Pattern</b> process above.
 
-## NAS Pertistent Volumes Pattern
+## Persistent Volumes Pattern
 - Some services require access to persist and/or read files to and from NAS servers. 
 - This requires the use of a ```Persistent volume``` that mounts the specific NAS location to be available in the namespace.
 - A ```persisitent volume claim``` to the ```pv``` is then created and the application deployment mounts the ```pvc```
 - An example ```helloworldopenshift-pvc``` has been added to ```deployment.yaml``` and is mounted to ```/nfs```  
 
-# TODO's
-
 ## Horizontal Pod AutoScaling patterns
-- Implementable in for this app
+- [HorizontalPodAutoscaling](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) is used to automatically deploy more Pods depending on load. 
+- This can be enabled in the ```values.yaml``` for this application
+
+
+# TODO's
 
 ## CICD Pattern
 - Jenkins CI
@@ -219,7 +221,6 @@ kubeseal -o yaml --controller-namespace sealed-secrets </tmp/mysecret.yaml >seal
 - Instructions on how to engage SCRM team to get Jenkins Jobs and have pipelines used
 
 ## Observability Patterns
-- Monitoring use tie in (This is still kinda fuzzy because monitoring team still hasnt showed any actual integration)
 - Service Mesh 
 
 #
